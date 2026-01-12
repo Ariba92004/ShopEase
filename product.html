@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Details | ShopEase</title>
+    <link rel="stylesheet" href="product.css">
+</head>
+<body>
+
+<header class="header">
+    <h2>ShopEase</h2>
+</header>
+
+<section class="product-detail">
+    <img id="productImage" alt="Product Image">
+    <h2 id="productName"></h2>
+    <p id="productPrice"></p>
+
+    <button onclick="addToCart()">Add to Cart</button>
+    <button onclick="orderNow()">Order Now</button>
+</section>
+
+<script>
+const products = {
+
+    /* BEAUTY */
+    cream:{name:"Beauty Cream",price:"Rs. 1,200",image:"beautyCream.avif"},
+    lotion:{name:"Body Lotion",price:"Rs. 900",image:"beauty-lotions-creams-5003693.webp"},
+    facewash:{name:"Face Wash",price:"Rs. 500",image:"facewash.webp"},
+    perfume:{name:"Perfume",price:"Rs. 2,500",image:"perfume.jpg"},
+    makeupkit:{name:"Makeup Kit",price:"Rs. 3,000",image:"makeupKit.jfif"},
+    shampoo:{name:"Shampoo",price:"Rs. 750",image:"shampoo.jfif"},
+
+    /* ELECTRONICS */
+    laptop:{name:"Laptop Pro",price:"Rs. 120,000",image:"laptop.webp"},
+    smartwatch:{name:"Smart Watch",price:"Rs. 18,000",image:"watch.webp"},
+    speaker:{name:"Bluetooth Speaker",price:"Rs. 7,200",image:"speakers.webp"},
+    mouse:{name:"Wireless Mouse",price:"Rs. 2,500",image:"mouse.webp"},
+    headset:{name:"Gaming Headset",price:"Rs. 9,800",image:"headsets.webp"},
+    powerbank:{name:"Power Bank",price:"Rs. 4,200",image:"powerbank.jfif"},
+
+    /* GROCERIES */
+    milk:{name:"Milk Pack",price:"Rs. 120",image:"milkpack.webp"},
+    rice:{name:"Rice Bag 5kg",price:"Rs. 450",image:"rice.webp"},
+    oil:{name:"Cooking Oil",price:"Rs. 250",image:"oil.webp"},
+    fruits:{name:"Fresh Fruits Pack",price:"Rs. 300",image:"fruits.webp"},
+    vegetables:{name:"Vegetables Pack",price:"Rs. 200",image:"vegetables.webp"},
+    grocerypack:{name:"Grocery Pack",price:"Rs. 3,500",image:"grocerypack.webp"},
+
+    /* HOME & LIVING */
+    sofa:{name:"Luxury Sofa",price:"Rs. 25,000",image:"sofa.webp"},
+    lamp:{name:"Table Lamp",price:"Rs. 1,800",image:"lamp.webp"},
+    diningtable:{name:"Dining Table",price:"Rs. 15,500",image:"dining table.webp"},
+    bed:{name:"Queen Bed",price:"Rs. 30,000",image:"bed.webp"},
+    curtains:{name:"Designer Curtains",price:"Rs. 3,200",image:"curtains.jpg"},
+    rug:{name:"Floor Rug",price:"Rs. 2,800",image:"rug.webp"}
+};
+
+const id=new URLSearchParams(window.location.search).get("id");
+if(products[id]){
+    productName.innerText=products[id].name;
+    productPrice.innerText=products[id].price;
+    productImage.src=products[id].image;
+}else{
+    document.querySelector(".product-detail").innerHTML="<h2>Product not found</h2>";
+}
+function addToCart() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const product = products[id];
+    product.id = id;
+    product.qty = 1;
+
+    const existing = cart.find(item => item.id === id);
+    if (existing) {
+        existing.qty += 1;
+    } else {
+        cart.push(product);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert("Added to cart 🛒");
+}
+
+function orderNow() {
+    addToCart();
+    window.location.href = "cart.html";}
+</script>
+
+
+</body>
+</html>

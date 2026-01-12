@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cart | ShopEase</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <h2>ShopEase - Cart</h2>
+</header>
+
+<section class="products" id="cartItems"></section>
+
+<div style="text-align:center; margin:20px;">
+    <h2 id="total"></h2>
+    <button onclick="checkout()">Proceed to Checkout</button>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let total = 0;
+
+const cartDiv = document.getElementById("cartItems");
+
+if (cart.length === 0) {
+    cartDiv.innerHTML = "<h2>Your cart is empty 🛒</h2>";
+}
+
+cart.forEach(item => {
+    total += parseInt(item.price.replace(/\D/g,'')) * item.qty;
+
+    cartDiv.innerHTML += `
+    <div class="card">
+        <img src="${item.image}">
+        <h3>${item.name}</h3>
+        <p>${item.price}</p>
+        <p>Qty: ${item.qty}</p>
+    </div>`;
+});
+
+document.getElementById("total").innerText = "Total: Rs. " + total;
+
+function checkout(){
+    window.location.href = "checkout.html";
+}
+</script>
+
+</body>
+</html>
